@@ -9,9 +9,9 @@ Universe.prototype = {
         this.__initializeVariables(starCount);
         this.__createCanvas();
         this.__createUniverse();
-        //var self = this;
-        this.__renderUniverse();
-        //setInterval(function() {self.__renderUniverse()}, 33);
+        //this.__renderUniverse();
+        var self = this;
+        setInterval(function() {self.__renderUniverse()}, 33);
     },
 
     __createCanvas: function() {
@@ -160,10 +160,10 @@ Star.prototype = {
 
     __generateYPosition: function() {
         return this.__generateRandomRange(
-            0,
-            this.__universe.height
-            //this.__universe.heightCenter - 2,
-            //this.__universe.heightCenter + 2
+            //0,
+            //this.__universe.height
+            this.__universe.heightCenter - 2,
+            this.__universe.heightCenter + 2
         );
     },
 
