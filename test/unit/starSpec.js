@@ -7,7 +7,7 @@ describe('Star', function() {
         realRandom = Math.random;
         ctxMock = new CTXMock();
         Math.random = function() { return 1;}
-        star = new Star(ctxMock, new UniverseObjectMock());
+        star = new Star('small', ctxMock, new UniverseObjectMock());
     });
 
     afterEach(function() {
@@ -15,6 +15,10 @@ describe('Star', function() {
     });
 
     describe('Initialized variables', function() {
+        it('should have a size variable', function() {
+            expect(star.__size).toBe('small');
+        });
+
         it('should have a ctx object', function() {
             expect(star.__ctx).toBeDefined();
         });
@@ -28,23 +32,27 @@ describe('Star', function() {
         });
 
         it('should have a currentXPosition variable', function() {
-            expect(star.__currentXPosition).toBe(253);
+            expect(star.__currentXPosition).toBe(351);
         });
 
         it('should have a currentYPosition variable', function() {
-            expect(star.__currentYPosition).toBe(353);
+            expect(star.__currentYPosition).toBe(451);
         });
 
         it('should have a xTrajectory variable', function() {
-            expect(star.__speed).toBe(2);
+            expect(star.__speed).toBe(4);
         });
 
         it('should have a slope variable', function() {
-            expect(star.__slope).toBe(0.33035714285714285);
+            expect(star.__slope).toBe(1);
         });
 
         it('should have a slope variable', function() {
-            expect(star.__b).toBe(269.4196428571429);
+            expect(star.__b).toBe(100);
+        });
+
+        it('should have a radius delta variable', function() {
+            expect(star.__radiusDelta).toBe(undefined);
         });
 
         it('should have an X Quadrant variable', function() {
@@ -56,62 +64,25 @@ describe('Star', function() {
         });
     });
 
-    describe('Is star visible', function() {
-        it('should have a true variable', function() {
-            star.__currentXPosition = 0;
-            star.__universe.width = 1;
-            star.__currentYPosition = 0;
-            star.__universe.height = 1;
-            expect(star.__isStarVisible()).toBe(true);
-        });
-
-        it('should have a true variable', function() {
-            star.__currentXPosition = 0;
-            star.__universe.width = 0;
-            star.__currentYPosition = 0;
-            star.__universe.height = 1;
-            expect(star.__isStarVisible()).toBe(true);
-        });
-
-        it('should have a true variable', function() {
-            star.__currentXPosition = 0;
-            star.__universe.width = 1;
-            star.__currentYPosition = 0;
-            star.__universe.height = 0;
-            expect(star.__isStarVisible()).toBe(true);
-        });
-
-        it('should have a false variable', function() {
-            star.__currentXPosition = 1;
-            star.__universe.width = 0;
-            star.__currentYPosition = 0;
-            star.__universe.height = 1;
-            expect(star.__isStarVisible()).toBe(false);
-        });
-
-        it('should have a false variable', function() {
-            star.__currentXPosition = 0;
-            star.__universe.width = 1;
-            star.__currentYPosition = 1;
-            star.__universe.height = 0;
-            expect(star.__isStarVisible()).toBe(false);
-        });
-
-        it('should have a false variable', function() {
-            star.__currentXPosition = 1;
-            star.__universe.width = 0;
-            star.__currentYPosition = 1;
-            star.__universe.height = 0;
-            expect(star.__isStarVisible()).toBe(false);
-        });
-    });
-
     describe('Draw Star', function() {
         beforeEach(function() {
+            spyOn(ctxMock, 'save');
+            spyOn(ctxMock, 'restore');
             spyOn(ctxMock, 'beginPath');
+            spyOn(ctxMock, 'closePath');
             spyOn(ctxMock, 'arc');
             spyOn(ctxMock, 'fill');
             spyOn(ctxMock, 'stroke');
+        });
+
+        it('should call ctx.save', function() {
+            star.draw();
+            expect(ctxMock.save).toHaveBeenCalled();
+        });
+
+        it('should call ctx.restore', function() {
+            star.draw();
+            expect(ctxMock.restore).toHaveBeenCalled();
         });
 
         it('should call ctx.beginPath', function() {
@@ -122,17 +93,43 @@ describe('Star', function() {
         it('should call ctx.arc', function() {
             star.draw();
             expect(ctxMock.arc).toHaveBeenCalledWith(
-                253,
-                353,
+                351,
+                451,
                 0.5,
                 0,
-                6.283185307179586
+                6.283185307179586,
+                false
             );
+        });
+
+        it('should call ctx.lineWidth', function() {
+            star.draw();
+            expect(ctxMock.lineWidth).toBe(1);
         });
 
         it('should call ctx.fillStyle', function() {
             star.draw();
             expect(ctxMock.fillStyle).toBe('#FFFFFF');
+        });
+
+        it('should call ctx.shadowBlur', function() {
+            star.draw();
+            expect(ctxMock.shadowBlur).toBe(0);
+        });
+
+        it('should call ctx.shadowColor', function() {
+            star.draw();
+            expect(ctxMock.shadowColor).toBe('black');
+        });
+
+        it('should call ctx.shadowOffsetX', function() {
+            star.draw();
+            expect(ctxMock.shadowOffsetX).toBe(0);
+        });
+
+        it('should call ctx.shadowOffsetY', function() {
+            star.draw();
+            expect(ctxMock.shadowOffsetY).toBe(0);
         });
 
         it('should call ctx.fill', function() {
@@ -148,6 +145,11 @@ describe('Star', function() {
         it('should call ctx.stroke', function() {
             star.draw();
             expect(ctxMock.stroke).toHaveBeenCalled();
+        });
+
+        it('should call ctx.closePath', function() {
+            star.draw();
+            expect(ctxMock.closePath).toHaveBeenCalled();
         });
     });
 
@@ -167,33 +169,33 @@ describe('Star', function() {
             });
 
             it('should increment the currentXPosition', function() {
-                expect(star.__currentXPosition).toBe(253);
+                expect(star.__currentXPosition).toBe(351);
                 star.update();
-                expect(star.__currentXPosition).toBe(255);
+                expect(star.__currentXPosition).toBe(355);
             });
 
             it('should increment the currentYPosition', function() {
-                expect(star.__currentYPosition).toBe(353);
+                expect(star.__currentYPosition).toBe(451);
                 star.update();
-                expect(star.__currentYPosition).toBe(353.66071428571433);
+                expect(star.__currentYPosition).toBe(455);
             });
         });
 
         describe('Star is not visible', function() {
             beforeEach(function() {
-                star.__isStarVisible = function() {return false;}
+                star.isStarVisible = function() {return false;}
             });
 
             it('should increment the currentXPosition', function() {
-                expect(star.__currentXPosition).toBe(253);
+                expect(star.__currentXPosition).toBe(351);
                 star.update();
-                expect(star.__currentXPosition).toBe(253);
+                expect(star.__currentXPosition).toBe(351);
             });
 
             it('should increment the currentYPosition', function() {
-                expect(star.__currentYPosition).toBe(353);
+                expect(star.__currentYPosition).toBe(451);
                 star.update();
-                expect(star.__currentYPosition).toBe(353);
+                expect(star.__currentYPosition).toBe(451);
             });
         });
     });

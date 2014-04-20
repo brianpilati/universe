@@ -5,14 +5,20 @@
         <script src="lib/jquery.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
-                universe = new Universe(500);
+                universe = new Universe(1000);
             });
         </script>
     </head>
     <body>
         <div id="universe">
             <div id="space"></div>
-            <div id="buttons"></div>
+            <div id="buttons">
+                <div id="normalGeneration" class="button highlighted">Normal</div>
+                <div id="compressedGeneration" class="button">Compressed</div>
+                <div id="horizontalGeneration" class="button">Horizontal</div>
+                <div id="verticalGeneration" class="button">Vertical</div>
+                <div id="animate" class="toggleButton">Animate</div>
+            </div>
         </div>
         <script src="js/universe.js"></script>
     </body>

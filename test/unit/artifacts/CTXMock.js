@@ -2,11 +2,19 @@
 
 var CTXMock = function() {
     return {
+        'save': function() { },
+        'restore': function() { },
         'beginPath': function() { },
+        'closePath': function() { },
         'arc': function() { },
         'fill': function() { },
-        'fillStyle': undefined,
         'stroke': function() { },
-        'strokeStyle': undefined
+        'fillStyle': undefined,
+        'lineWidth': undefined,
+        'strokeStyle': undefined,
+        'shadowBlur': undefined,
+        'shadowColor': undefined,
+        'shadowOffsetX': undefined,
+        'shadowOffsetY': undefined
     }
 };

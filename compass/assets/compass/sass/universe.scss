@@ -1,4 +1,10 @@
 $space: rgba(0,0,0,1);
+$button_container_height: 50px;
+$button_border: 1;
+$button_margin: $button_border * 2;
+$button_height_calc: $button_container_height - $button_margin * 2;
+$button_top_padding: $button_height_calc / 2 - 10;
+$button_height: $button_height_calc - $button_top_padding;
 
 #universe {
     position: absolute;
@@ -8,4 +14,36 @@ $space: rgba(0,0,0,1);
     right: 0px;
     background: $space;
     overflow: hidden;
+}
+
+#buttons {
+    position: absolute;
+    height: $button_container_height;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: transparent;
+    overflow: hidden;
+    border: 1px solid red;
+
+    .toggleButton, .button {
+        position: relative;
+        float: left;
+        height: $button_height;
+        width: auto;
+        margin-top: $button_margin;
+        margin-left: 10px;
+        border: $button_border solid white;
+        color: white;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: $button_top_padding;
+        cursor: pointer;
+        background: $space;
+
+    }
+
+    .highlighted {
+        background: red;
+    }
 }

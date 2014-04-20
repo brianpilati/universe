@@ -5,6 +5,7 @@ var UniverseObjectMock = function() {
         'width': 700,
         'height': 500,
         'heightCenter': 350,
-        'widthCenter': 250
+        'widthCenter': 250,
+        'creation': 'compressed'
     }
 };
