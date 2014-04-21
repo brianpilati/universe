@@ -97,8 +97,7 @@ describe('Star', function() {
                 451,
                 0.5,
                 0,
-                6.283185307179586,
-                false
+                6.283185307179586
             );
         });
 
@@ -110,26 +109,6 @@ describe('Star', function() {
         it('should call ctx.fillStyle', function() {
             star.draw();
             expect(ctxMock.fillStyle).toBe('#FFFFFF');
-        });
-
-        it('should call ctx.shadowBlur', function() {
-            star.draw();
-            expect(ctxMock.shadowBlur).toBe(0);
-        });
-
-        it('should call ctx.shadowColor', function() {
-            star.draw();
-            expect(ctxMock.shadowColor).toBe('black');
-        });
-
-        it('should call ctx.shadowOffsetX', function() {
-            star.draw();
-            expect(ctxMock.shadowOffsetX).toBe(0);
-        });
-
-        it('should call ctx.shadowOffsetY', function() {
-            star.draw();
-            expect(ctxMock.shadowOffsetY).toBe(0);
         });
 
         it('should call ctx.fill', function() {

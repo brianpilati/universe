@@ -78,10 +78,12 @@ Universe.prototype = {
         this.__ctx.clearRect(0, 0, this.__universe.width, this.__universe.height);
         //this.__drawQuadrants(); /*debug*/
         //Order matters
-        $.each(this.__stars.small, function( index, star) {
-            star.draw();
-            star.update();
-        });
+        if (this.__stars.small.length) {
+            $.each(this.__stars.small, function( index, star) {
+                star.draw();
+                star.update();
+            });
+        }
 
         if (this.__stars.medium.length) {
             $.each(this.__stars.medium, function( index, star) {
@@ -183,6 +185,20 @@ Universe.prototype = {
     }
 }
 
+function Planet(ctx, universe) {
+    this.__initializeVariables('planet', ctx, universe);
+}
+
+Planet.prototype = {
+    draw: function() {
+        this.__ring('red', 0, 2*Math.PI);
+        this.__orb();
+        this.__shadow2('grey',.60 * Math.PI, 1.6 * Math.PI);
+        //this.__shadow('red', 25, -2, -2);
+        this.__ring('red',.25 * Math.PI, 1.50 * Math.PI);
+    },
+}
+
 function Star(size, ctx, universe) {
     init: {
         this.__initializeVariables(size, ctx, universe);
@@ -191,59 +207,20 @@ function Star(size, ctx, universe) {
 
 Star.prototype = {
     draw: function() {
-        this.__ctx.save();
-        this.__ctx.beginPath();
-        this.__ctx.arc(
-            this.__currentXPosition,
-            this.__currentYPosition,
-            this.__radius,
-            0,
-            2*Math.PI,
-            false
-        );
-        this.__ctx.fillStyle = this.__fillStyle;
-        this.__ctx.strokeStyle = this.__strokeStyle;
-        this.__ctx.closePath();
-        this.__ctx.fill();
-        this.__ctx.stroke();
-
-        if (this.__size === 'planet' || this.__size === 'nova' || this.__size === 'large') {
-            this.__ctx.beginPath();
-            this.__ctx.arc(
-                this.__currentXPosition,
-                this.__currentYPosition,
-                this.__radius,
-                0,
-                2*Math.PI,
-                false
-            );
-            this.__ctx.clip();
-
-            this.__ctx.beginPath();
-            this.__ctx.strokeStyle = 'black';
-            this.__ctx.lineWidth = 5;
-            this.__ctx.shadowBlur = 15 + this.__radiusDelta;
-            this.__ctx.shadowColor = 'black';
-            this.__ctx.shadowOffsetX = 2;
-            this.__ctx.shadowOffsetY = 2;
-            this.__ctx.arc(
-                this.__currentXPosition,
-                this.__currentYPosition,
-                this.__radius + 3,
-                0,
-                2*Math.PI,
-                false
-            );
-            this.__ctx.stroke();
+        if (this.__size === 'planet') {
+            this.__ring('red', 0, 2*Math.PI);
         }
 
-        this.__ctx.lineWidth = 1;
-        this.__ctx.shadowBlur = 0;
-        this.__ctx.shadowColor = 'black';
-        this.__ctx.shadowOffsetX = 0;
-        this.__ctx.shadowOffsetY = 0;
+        this.__orb();
 
-        this.__ctx.restore();
+        if (this.__size === 'planet' || this.__size === 'nova' || this.__size === 'large') {
+            this.__shadow2('grey',.60 * Math.PI, 1.6 * Math.PI);
+            //this.__shadow('red', 25, -2, -2);
+        }
+
+        if (this.__size === 'planet') {
+            this.__ring('red',.25 * Math.PI, 1.50 * Math.PI);
+        }
     },
 
     update: function() {
@@ -255,6 +232,100 @@ Star.prototype = {
         } else {
             this.__buildStarSpeed();
         }
+    },
+
+    __orb: function() {
+        this.__ctx.save();
+        this.__ctx.beginPath();
+        this.__ctx.lineWidth = 1;
+        this.__ctx.arc(
+            this.__currentXPosition,
+            this.__currentYPosition,
+            this.__radius,
+            0,
+            2*Math.PI
+        );
+        this.__ctx.fillStyle = this.__fillStyle;
+        this.__ctx.strokeStyle = this.__strokeStyle;
+        this.__ctx.fill();
+        this.__ctx.stroke();
+        this.__ctx.closePath();
+        this.__ctx.restore();
+    },
+
+    __ring: function(strokeStyle, startAngle, endAngle) {
+        this.__ctx.save();
+        this.__ctx.beginPath();
+        this.__ctx.strokeStyle = strokeStyle;
+        this.__ctx.lineWidth = this.__radius * .10;
+
+        this.__ctx.transform(0.75,0.05,0.95,.75,this.__currentXPosition,this.__currentYPosition);
+        this.__ctx.arc(
+            0,
+            0,
+            this.__radius,
+            startAngle,
+            endAngle
+        );
+        this.__ctx.stroke();
+        this.__ctx.closePath();
+        this.__ctx.restore();
+    },
+
+    __shadow2: function(strokeStyle, startAngle, endAngle) {
+        this.__ctx.save();
+        this.__ctx.beginPath();
+        this.__ctx.arc(
+            this.__currentXPosition,
+            this.__currentYPosition,
+            this.__radius,
+            0,
+            2*Math.PI
+        )
+        this.__ctx.clip();
+        this.__ctx.closePath();
+
+        this.__ctx.beginPath();
+
+        this.__ctx.strokeStyle = strokeStyle;
+        this.__ctx.lineWidth = 5;
+        this.__ctx.shadowBlur = 30;
+        this.__ctx.shadowColor = 'black';
+        this.__ctx.shadowOffsetX = -10;
+        this.__ctx.shadowOffsetY = -10
+
+        this.__ctx.arc(
+            this.__currentXPosition,
+            this.__currentYPosition,
+            this.__radius,
+            startAngle,
+            endAngle,
+            true
+        );
+        this.__ctx.stroke();
+        this.__ctx.closePath();
+        this.__ctx.restore();
+    },
+
+    __shadow: function(shadowColor, shadowBlur, shadowOffsetX, shadowOffsetY) {
+        //this.__ctx.save();
+        this.__ctx.beginPath();
+        this.__ctx.strokeStyle = 'black';
+        this.__ctx.lineWidth = 15;
+        this.__ctx.shadowBlur = shadowBlur;
+        this.__ctx.shadowColor = shadowColor;
+        this.__ctx.shadowOffsetX = shadowOffsetX;
+        this.__ctx.shadowOffsetY = shadowOffsetY;
+        this.__ctx.arc(
+            this.__currentXPosition,
+            this.__currentYPosition,
+            this.__radius,
+            0,
+            2*Math.PI
+        );
+        this.__ctx.stroke();
+        this.__ctx.closePath();
+        //this.__ctx.restore();
     },
 
     __initializeVariables: function(size, ctx, universe) {
@@ -342,20 +413,20 @@ StarGeneration.prototype = {
             this.__strokeStyle = "#000000";
         } else if (this.__size === 'large') {
             speed = 2;
-            this.__radius = 4;
-            this.__radiusDelta = 0.05;
+            this.__radius = 6;
+            this.__radiusDelta = 0.025;
             this.__fillStyle = "#CC6633";
             this.__strokeStyle = "#000000";
         } else if (this.__size === 'nova') {
             speed = 1.5;
-            this.__radius = 6;
-            this.__radiusDelta = 0.075;
+            this.__radius = 8;
+            this.__radiusDelta = 0.05;
             this.__fillStyle = "#CC33FF";
             this.__strokeStyle = "#000000";
         } else if (this.__size === 'planet') {
             speed = 1;
-            this.__radius = 10;
-            this.__radiusDelta = 1;
+            this.__radius = 20;
+            this.__radiusDelta = .5;
             this.__fillStyle = "#8888FF";
             this.__strokeStyle = "#000000";
         }
@@ -491,3 +562,5 @@ Debug.prototype = {
 $.extend(Star.prototype, StarGeneration.prototype);
 $.extend(Star.prototype, StarMovement.prototype);
 $.extend(Universe.prototype, Debug.prototype);
+$.extend(Planet.prototype, Star.prototype);
+

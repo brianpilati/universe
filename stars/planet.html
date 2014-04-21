@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Universe</title>
+        <link rel="stylesheet" href="../css/universe.css"/>
+        <link rel="stylesheet" href="../css/creation.css"/>
+        <script src="../lib/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var universe = new Universe(-1);
+                var planet = new Planet(universe.__ctx, universe.__universe);
+                planet.__radius = 80;
+                planet.__currentXPosition = universe.__universe.widthCenter;
+                planet.__currentYPosition = universe.__universe.heightCenter;
+                planet.draw();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="universe">
+            <div id="space"></div>
+        </div>
+        <script src="../js/universe.js"></script>
+    </body>
+</html>
