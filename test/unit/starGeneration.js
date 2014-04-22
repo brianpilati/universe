@@ -22,6 +22,20 @@ describe('Star Generation', function() {
             expect(range.max).toBe(252);
         });
 
+        it('should have an expanded vertical X Range', function() {
+            starGeneration.__universe.creation = 'expandedVertical';
+            var range = starGeneration.__getStarXRange();
+            expect(range.min).toBe(180);
+            expect(range.max).toBe(320);
+        });
+
+        it('should have an worm hole X Range', function() {
+            starGeneration.__universe.creation = 'wormHole';
+            var range = starGeneration.__getStarXRange();
+            expect(range.min).toBe(248);
+            expect(range.max).toBe(252);
+        });
+
         it('should have a normal X Range', function() {
             starGeneration.__universe.creation = 'normal';
             var range = starGeneration.__getStarXRange();
@@ -53,6 +67,20 @@ describe('Star Generation', function() {
 
         it('should have a vertical Y Range', function() {
             starGeneration.__universe.creation = 'vertical';
+            var range = starGeneration.__getStarYRange();
+            expect(range.min).toBe(0);
+            expect(range.max).toBe(500);
+        });
+
+        it('should have a worm hole Y Range', function() {
+            starGeneration.__universe.creation = 'wormHole';
+            var range = starGeneration.__getStarYRange();
+            expect(range.min).toBe(348);
+            expect(range.max).toBe(352);
+        });
+
+        it('should have a expanded vertical Y Range', function() {
+            starGeneration.__universe.creation = 'expandedVertical';
             var range = starGeneration.__getStarYRange();
             expect(range.min).toBe(0);
             expect(range.max).toBe(500);

@@ -13,7 +13,7 @@ describe('Star Movement', function() {
             starMovement.__universe.width = 1;
             starMovement.__currentYPosition = 0;
             starMovement.__universe.height = 1;
-            expect(starMovement.isStarVisible()).toBe(true);
+            expect(starMovement.isConstellationVisible()).toBe(true);
         });
 
         it('should have a true variable', function() {
@@ -21,7 +21,7 @@ describe('Star Movement', function() {
             starMovement.__universe.width = 0;
             starMovement.__currentYPosition = 0;
             starMovement.__universe.height = 1;
-            expect(starMovement.isStarVisible()).toBe(true);
+            expect(starMovement.isConstellationVisible()).toBe(true);
         });
 
         it('should have a true variable', function() {
@@ -29,7 +29,7 @@ describe('Star Movement', function() {
             starMovement.__universe.width = 1;
             starMovement.__currentYPosition = 0;
             starMovement.__universe.height = 0;
-            expect(starMovement.isStarVisible()).toBe(true);
+            expect(starMovement.isConstellationVisible()).toBe(true);
         });
 
         it('should have a false variable', function() {
@@ -37,7 +37,7 @@ describe('Star Movement', function() {
             starMovement.__universe.width = 0;
             starMovement.__currentYPosition = 0;
             starMovement.__universe.height = 1;
-            expect(starMovement.isStarVisible()).toBe(false);
+            expect(starMovement.isConstellationVisible()).toBe(false);
         });
 
         it('should have a false variable', function() {
@@ -45,7 +45,7 @@ describe('Star Movement', function() {
             starMovement.__universe.width = 1;
             starMovement.__currentYPosition = 1;
             starMovement.__universe.height = 0;
-            expect(starMovement.isStarVisible()).toBe(false);
+            expect(starMovement.isConstellationVisible()).toBe(false);
         });
 
         it('should have a false variable', function() {
@@ -53,7 +53,7 @@ describe('Star Movement', function() {
             starMovement.__universe.width = 0;
             starMovement.__currentYPosition = 1;
             starMovement.__universe.height = 0;
-            expect(starMovement.isStarVisible()).toBe(false);
+            expect(starMovement.isConstellationVisible()).toBe(false);
         });
     });
 });

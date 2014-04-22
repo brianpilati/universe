@@ -1,43 +1,43 @@
-/* jasmine specs for Star.js go here */
+/* jasmine specs for Plutoid.js go here */
 
-describe('Star', function() {
-    var star;
+describe('Plutoid', function() {
+    var plutoid;
 
     beforeEach(function() {
         ctxMock = new CTXMock();
-        star = new Star(ctxMock, new UniverseObjectMock());
+        plutoid = new Plutoid(ctxMock, new UniverseObjectMock());
     });
 
     describe('Initialized variables', function() {
         it('should have a speed original variable', function() {
-            expect(star.__speedOriginal).toBe(4);
+            expect(plutoid.__speedOriginal).toBe(3);
         });
 
         it('should have a radius delta variable', function() {
-            expect(star.__radiusDelta).toBe(0);
+            expect(plutoid.__radiusDelta).toBe(0.015);
         });
 
         it('should have a radius Original variable', function() {
-            expect(star.__radiusOriginal).toBe(1);
+            expect(plutoid.__radiusOriginal).toBe(1);
         });
 
         it('should have a __fillStyle variable', function() {
-            expect(star.__fillStyle).toBe('#FFFFFF');
+            expect(plutoid.__fillStyle).toBe('#99CC99');
         })
 
         it('should have a __strokeStyle variable', function() {
-            expect(star.__strokeStyle).toBe('#FFFFFF');
+            expect(plutoid.__strokeStyle).toBe('#000000');
         });
     });
 
-    describe('Draw Star', function() {
+    describe('Draw Plutoid', function() {
         beforeEach(function() {
-            spyOn(star, '__orb');
+            spyOn(plutoid, '__orb');
         });
 
         it('should call __orb', function() {
-            star.draw();
-            expect(star.__orb).toHaveBeenCalled();
+            plutoid.draw();
+            expect(plutoid.__orb).toHaveBeenCalled();
         });
     });
 });

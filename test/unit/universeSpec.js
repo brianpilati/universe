@@ -8,24 +8,25 @@ describe('Universe', function() {
         var universeElement = $('#universe');
         universeElement.css({'width': 700, 'height': 500});
         universe = new Universe();
+        spyOn(window, 'setInterval');
     });
 
     describe('Initialized variables', function() {
         it('should have a default star count', function() {
-            expect(universe.__starCount).toBe(4);
+            expect(universe.__bodiesCount).toBe(4);
         });
 
         it('should have a defined star count', function() {
             var definedUniverse = new Universe(500);
-            expect(definedUniverse.__starCount).toBe(500);
+            expect(definedUniverse.__bodiesCount).toBe(500);
         });
 
-        it('should have a stars small array', function() {
-            expect(universe.__stars.small.length).toEqual(2);
+        it('should have a stars star array', function() {
+            expect(universe.__bodies.stars.length).toEqual(3);
         });
 
-        it('should have a stars medium array', function() {
-            expect(universe.__stars.medium.length).toEqual(1);
+        it('should have a stars plutoids array', function() {
+            expect(universe.__bodies.plutoids.length).toEqual(0);
         });
 
         it('should have a ctx variable', function() {
@@ -76,7 +77,6 @@ describe('Universe', function() {
 
     describe('Animate Universe', function() {
         it('should call setInterval', function() {
-            spyOn(window, 'setInterval');
             universe.__animateUniverse();
             expect(window.setInterval).toHaveBeenCalled();
         });
@@ -97,9 +97,9 @@ describe('Universe', function() {
             spyOn(starMock, "draw");
             spyOn(starMock, "update");
             spyOn(universe.__ctx, "clearRect");
-            universe.__stars = new StarsObjectMock();
-            universe.__stars.small.push(starMock);
-            universe.__stars.medium.push(starMock);
+            universe.__bodies = new BodiesObjectMock();
+            universe.__bodies.stars.push(starMock);
+            universe.__bodies.plutoids.push(starMock);
         });
 
         it('should call clearRect', function() {
@@ -125,16 +125,16 @@ describe('Universe', function() {
         var localUniverse;
         beforeEach(function() {
             localUniverse = new Universe();
-            localUniverse.__stars = new StarsObjectMock();
-            localUniverse.__stars.small.push(new StarMock());
-            localUniverse.__stars.small.push(new StarMock());
-            localUniverse.__stars.small.push(new StarMock());
+            localUniverse.__bodies = new BodiesObjectMock();
+            localUniverse.__bodies.stars.push(new StarMock());
+            localUniverse.__bodies.stars.push(new StarMock());
+            localUniverse.__bodies.stars.push(new StarMock());
         });
 
         it('should superNova the localUniverse', function() {
-            expect(localUniverse.__stars.small.length).toBe(3);
+            expect(localUniverse.__bodies.stars.length).toBe(3);
             localUniverse.__superNovaUniverse();
-            expect(localUniverse.__stars.small.length).toBe(0);
+            expect(localUniverse.__bodies.stars.length).toBe(0);
         });
     });
 });

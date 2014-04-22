@@ -9,6 +9,7 @@ var CTXMock = function() {
         'arc': function() { },
         'fill': function() { },
         'stroke': function() { },
+        'clip': function() { },
         'fillStyle': undefined,
         'lineWidth': undefined,
         'strokeStyle': undefined,
