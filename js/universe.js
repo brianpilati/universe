@@ -78,8 +78,12 @@ Universe.prototype = {
         this.__renderUniverse();
     },
 
-    __renderUniverse: function() {
+    __eraseUniverse: function() {
         this.__ctx.clearRect(0, 0, this.__universe.width, this.__universe.height);
+    },
+
+    __renderUniverse: function() {
+        this.__eraseUniverse();
         //this.__drawQuadrants(); /*debug*/
         //Order matters
         $.each(this.__bodies.stars, function(index, star) {
@@ -193,7 +197,6 @@ function Planet(ctx, universe) {
 
 Planet.prototype = {
     draw: function() {
-        //this.__ring('#6666FF', 0, 2*Math.PI);
         this.ringBack('#BBBBFF');
         this.__orb();
         this.__shadow('grey',.60 * Math.PI, 1.6 * Math.PI);
@@ -202,7 +205,6 @@ Planet.prototype = {
         $.each(this.__craters, function(index, center) {
             self.__crater(center[0], center[1], "#7777FF");
         });
-        //this.__ring('#6666FF',.25 * Math.PI, 1.50 * Math.PI);
         this.ringFront('#BBBBFF');
     },
 

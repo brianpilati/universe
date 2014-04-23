@@ -1,0 +1,62 @@
+<html ng-app="bpCreation">
+    <head>
+        <title>Universe</title>
+        <link rel="stylesheet" href="../css/creation.css"/>
+        <script src="../lib/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var creation = new Creation();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="canvas">
+            <form ng-controller="bpMenu">
+                <div id="menuContainer"> 
+                    <div class="menu">
+                        <div class="title">Bodies</div>
+                        <div class="action">
+                            <select ng-model="body" ng-options="body.display for body in bodies"></select>
+                        </div>
+                    </div>
+                    <div class="menu">
+                        <div class="title">Position</div>
+                        <div class="action">
+                            X: <input type="text" class="mini" ng-model="xPosition"/> px
+                            Y: <input type="text" class="mini" ng-model="yPosition"/> px
+                        </div>
+                    </div>
+                    <div class="menu">
+                        <div class="title">Radius</div>
+                        <div class="action">
+                            <input type="text" ng-model="radius"/>
+                        </div>
+                    </div>
+                    <div class="menu">
+                        <div class="title">Animate</div>
+                        <div class="action">
+                            Step: <input type="text" class="mini" ng-model="animationSteps"/>
+                            <button type="button" ng-click="update()">Go</button>
+                        </div>
+                    </div>
+                    <div class="menu">
+                        <div class="title">Space</div>
+                        <div class="action">
+                            <input type="radio" ng-model="spaceColor" value="black">Black &nbsp;
+                            <input type="radio" ng-model="spaceColor" value="white">White
+                        </div>
+                    </div>
+                </div>
+                <div id="universe">
+                    <div id="space"></div>
+                </div>
+            </form>
+        </div>
+        <script src="../lib/angular.min.js"></script>
+        <script src="../js/angular/app.js"></script>
+        <script src="../js/angular/controllers.js"></script>
+        <script src="../js/angular/services.js"></script>
+        <script src="../js/creation.js"></script>
+        <script src="../js/universe.js"></script>
+    </body>
+</html>

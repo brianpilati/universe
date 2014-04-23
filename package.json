@@ -4,6 +4,7 @@
   "repository": "https://github.com/brianpilati/universe",
   "scripts": {
     "postinstall": "curl http://code.jquery.com/jquery-1.11.0.min.js > ./lib/jquery.min.js",
+    "postinstall": "curl https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js > ./lib/angular.min.js",
     "test": "make test"
   },
   "engines": {
