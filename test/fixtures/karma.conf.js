@@ -3,7 +3,9 @@ module.exports = function(config){
     basePath : '../../',
 
     files : [
-      'lib/**/*.js',
+      'lib/**/jquery.min.js',
+      'lib/**/angular.min.js',
+      'lib/**/angular-route.min.js',
       'js/**/*.js',
       'test/unit/**/*.js',
       'node_modules/jasmine-jquery/lib/jasmine-jquery.js'

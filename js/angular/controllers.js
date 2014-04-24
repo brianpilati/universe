@@ -1,5 +1,31 @@
-angular.module('bpCreation.controllers', ['bpCreation.services'])
-.controller('bpMenu', ['$scope', 'creation', function(scope, creation) {
+angular.module('bpCreation.controllers', [])
+.controller('bpNavigation', ['$scope', function(scope) {
+    scope.pages = [
+        {title: 'Creation', route: 'space'},
+        {title: 'Colors', route: 'colors'},
+    ]
+}])
+.controller('bpColorMenu', ['$scope', function(scope) {
+    scope.baseColor = "FF0000";
+    scope.ringColor = "00FF00";
+    scope.swatches = [
+        {title: 'Base Color', style: 'base'},
+        {title: 'Ring Color', style: 'ring'}
+    ];
+
+    function determineColor(color) {
+        var colors = {
+            'base': scope.baseColor,
+            'ring': scope.ringColor
+        }
+        return colors[color];
+    }
+
+    scope.style = function(value) {
+        return { "background-color": "#" + determineColor(value)};
+    };
+}])
+.controller('bpSpaceMenu', ['$scope', 'creation', function(scope, creation) {
     scope.spaceColor="white";
     scope.bodies = [
         { display: 'Planet', value: 'planet'},
