@@ -6,22 +6,68 @@ angular.module('bpCreation.controllers', [])
     ]
 }])
 .controller('bpColorMenu', ['$scope', function(scope) {
-    scope.baseColor = "FF0000";
+    scope.planetColor = "FF0000";
     scope.ringColor = "00FF00";
+    scope.colorOption = "planet";
+    scope.percentageSwatch = 100;
+
     scope.swatches = [
-        {title: 'Base Color', style: 'base'},
+        {title: 'Planet Color', style: 'planet'},
         {title: 'Ring Color', style: 'ring'}
     ];
 
+    function toHex(number) {
+        var hex = parseInt(number).toString(16).toUpperCase();
+        if (parseInt(hex, 16) < 16) {
+            hex = "0" + hex;
+        }
+        return hex;
+    }
+
+    function updateRGB(hex) {
+        scope.redSwatch = parseInt(hex.substr(0,2), 16);
+        scope.greenSwatch = parseInt(hex.substr(2,2), 16);
+        scope.blueSwatch = parseInt(hex.substr(4,2), 16);
+    }
+
+    function shadeRGB(percentage) {
+        percentage /= 100;
+        scope.redSwatch = scope.originalRedSwatch * percentage;
+        scope.greenSwatch = scope.originalGreenSwatch * percentage;
+        scope.blueSwatch = scope.originalBlueSwatch * percentage;
+    }
+
+    function updateSwatches() {
+        var hexColor = toHex(scope.redSwatch) + toHex(scope.greenSwatch) + toHex(scope.blueSwatch);
+        if (scope.colorOption === 'planet') {
+            scope.planetColor = hexColor;
+        } else if (scope.colorOption === 'ring') {
+            scope.ringColor = hexColor;
+        }
+    }
+
+    scope.$watch('colorOption', function(newValue, oldValue) {
+        scope.percentageSwatch = 100;
+        updateRGB(determineColor(newValue));
+        scope.originalRedSwatch = scope.redSwatch;
+        scope.originalGreenSwatch = scope.greenSwatch;
+        scope.originalBlueSwatch = scope.blueSwatch;
+    });
+
+    scope.$watch('percentageSwatch', function(newValue, oldValue) {
+        shadeRGB(newValue);
+    });
+
     function determineColor(color) {
         var colors = {
-            'base': scope.baseColor,
+            'planet': scope.planetColor,
             'ring': scope.ringColor
         }
         return colors[color];
     }
 
     scope.style = function(value) {
+        updateSwatches();
         return { "background-color": "#" + determineColor(value)};
     };
 }])

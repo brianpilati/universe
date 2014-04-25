@@ -28,6 +28,6 @@ angular.module('bpCreation.directives', [])
         restrict: 'E',
         replace: true,
         transclude: false,
-        template: '<div><a href="#/{{page.route}}">{{page.title}}</a></div>'
+        template: '<div class="navigationMenu"><a href="#/{{page.route}}">{{page.title}}</a></div>'
     }
 }]);

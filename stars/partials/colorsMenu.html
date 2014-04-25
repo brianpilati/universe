@@ -1,14 +1,27 @@
 <div id="menuContainer">
     <div class="menu">
-        <div class="title">Base Color</div>
-        <div class="action">
-            #<input type="text" class="mini" ng-model="baseColor"/>
+        <div class="title">Swatches</div>
+        <div class="action large">
+            R <input type="range" min="0" max="255" ng-model="redSwatch"/><br>
+            G <input type="range" min="0" max="255" ng-model="greenSwatch"/><br>
+            B <input type="range" min="0" max="255" ng-model="blueSwatch"/><br>
+            % <input type="range" min="0" max="100" ng-model="percentageSwatch"/>
         </div>
     </div>
     <div class="menu">
-        <div class="title">Ring Color</div>
+        <div class="title">
+            <input type="radio" name="color" value="planet" ng-model="colorOption"/> Planet Color
+        </div>
         <div class="action">
-            #<input type="text" class="mini" ng-model="ringColor"/>
+            #<input type="text" class="mini" ng-model="planetColor"/>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="title">
+            <input type="radio" name="color" value="ring" ng-model="colorOption"/> Ring Color 
+        </div>
+        <div class="action">
+            #<input type="text" class="mini" ng-model="ringColor"/><br>
         </div>
     </div>
 </div>

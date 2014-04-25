@@ -7,7 +7,21 @@ $space: rgba(255,255,255,1);
     left: 0px;
     right: 0px;
     background: transparent;
-    overflow: hidden;
+    //overflow: hidden;
+    z-index: 10000;
+
+    .navigationMenu {
+        position: relative;
+        float: left;
+        height: 30px;
+        width: auto;
+        padding: 15 10 5 10;
+        border: 1px solid black;
+    }
+
+    a:link, a:visited, a:hover, a:active {
+        text-decoration: none;
+    }
 }
 
 #canvas {
@@ -33,7 +47,7 @@ $space: rgba(255,255,255,1);
         .menu {
             position: relative;
             width: 100%;
-            height: 45px;
+            height: auto;
             border-bottom: 1px solid black;
 
             .title {
@@ -53,6 +67,11 @@ $space: rgba(255,255,255,1);
                 text-align: center;
                 color: black;
             }
+
+            .large {
+                height: 100px;
+            }
+
         }
 
     }
